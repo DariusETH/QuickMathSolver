@@ -1,0 +1,19 @@
+{
+  "name": "quick-math-solver",
+  "version": "1.0.0",
+  "description": "A simple math calculator for quick calculations",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "keywords": ["math", "calculator", "solver"],
+  "author": "DariusETH",
+  "license": "MIT",
+  "dependencies": {
+    "mathjs": "^11.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
