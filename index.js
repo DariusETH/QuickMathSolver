@@ -1,4 +1,5 @@
 const readline = require('readline');
+const mathUtils = require('./math-utils');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -6,15 +7,28 @@ const rl = readline.createInterface({
 });
 
 console.log('QuickMathSolver - Your simple math calculator');
+console.log('Available functions: sqrt(), factorial(), sin(), cos(), tan(), log(), log10()');
+console.log('Constants: PI, E');
 console.log('Type "exit" to quit\n');
 
 function calculate(expression) {
   try {
-    // Simple eval for basic math operations
-    const result = eval(expression);
+    // Replace function names with mathUtils calls
+    let processedExp = expression
+      .replace(/sqrt\(/g, 'mathUtils.sqrt(')
+      .replace(/factorial\(/g, 'mathUtils.factorial(')
+      .replace(/sin\(/g, 'mathUtils.sin(')
+      .replace(/cos\(/g, 'mathUtils.cos(')
+      .replace(/tan\(/g, 'mathUtils.tan(')
+      .replace(/log10\(/g, 'mathUtils.log10(')
+      .replace(/log\(/g, 'mathUtils.log(')
+      .replace(/PI/g, 'mathUtils.PI')
+      .replace(/E/g, 'mathUtils.E');
+
+    const result = eval(processedExp);
     return result;
   } catch (error) {
-    return 'Error: Invalid expression';
+    return `Error: ${error.message}`;
   }
 }
 
