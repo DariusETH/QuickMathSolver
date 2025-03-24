@@ -1,10 +1,13 @@
 const readline = require('readline');
 const mathUtils = require('./math-utils');
+const InputValidator = require('./input-validator');
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
+const validator = new InputValidator();
 
 console.log('QuickMathSolver - Your simple math calculator');
 console.log('Available functions: sqrt(), factorial(), sin(), cos(), tan(), log(), log10()');
@@ -13,8 +16,14 @@ console.log('Type "exit" to quit\n');
 
 function calculate(expression) {
   try {
+    // Validate input first
+    const validation = validator.validate(expression);
+    if (!validation.valid) {
+      return `Input Error: ${validation.error}`;
+    }
+
     // Replace function names with mathUtils calls
-    let processedExp = expression
+    let processedExp = validation.cleanedInput
       .replace(/sqrt\(/g, 'mathUtils.sqrt(')
       .replace(/factorial\(/g, 'mathUtils.factorial(')
       .replace(/sin\(/g, 'mathUtils.sin(')
@@ -28,7 +37,7 @@ function calculate(expression) {
     const result = eval(processedExp);
     return result;
   } catch (error) {
-    return `Error: ${error.message}`;
+    return `Calculation Error: ${error.message}`;
   }
 }
 
