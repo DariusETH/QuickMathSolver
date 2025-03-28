@@ -10,3 +10,4 @@ CLAUDE.md
 dist/
 build/
 coverage/
+calculation_history.json
